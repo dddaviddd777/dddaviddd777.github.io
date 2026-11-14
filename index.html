@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Índex de projectes</title>
+<meta name="description" content="Portal d'accés a les aplicacions i petits projectes publicats.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f2a44'/%3E%3Crect x='14' y='14' width='15' height='15' rx='4' fill='%23f4b860'/%3E%3Crect x='35' y='14' width='15' height='15' rx='4' fill='%2387c5a4'/%3E%3Crect x='14' y='35' width='15' height='15' rx='4' fill='%2387a8e8'/%3E%3Crect x='35' y='35' width='15' height='15' rx='4' fill='%23e88a8a'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --muted: #66655f;
+    --line: #e4e2db;
+    --accent: #2f5bd3;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+    --shadow-hover: 0 2px 4px rgba(0,0,0,.06), 0 14px 32px rgba(0,0,0,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121316;
+      --surface: #1b1d22;
+      --text: #ecebe6;
+      --muted: #9c9a92;
+      --line: #2c2f36;
+      --accent: #8aa8ff;
+      --shadow: 0 1px 2px rgba(0,0,0,.3);
+      --shadow-hover: 0 10px 30px rgba(0,0,0,.45);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 56px 20px 72px; }
+  header h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; margin: 0 0 10px; letter-spacing: -.02em; }
+  header p { margin: 0; color: var(--muted); max-width: 46ch; }
+  h2 {
+    font-size: .8rem; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 52px 0 16px; font-weight: 600;
+  }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+  .card {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 18px; border-radius: 16px;
+    background: var(--surface); border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    color: inherit; text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  a.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: transparent; }
+  a.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .logo {
+    flex: none; width: 60px; height: 60px; border-radius: 14px;
+    object-fit: cover; background: var(--line);
+  }
+  .card h3 { margin: 2px 0 4px; font-size: 1.05rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .92rem; }
+  .tag {
+    display: inline-block; margin-top: 10px; font-size: .75rem; font-weight: 600;
+    color: var(--accent);
+  }
+  a.card:hover .tag { text-decoration: underline; }
+
+  .others { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .other {
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px 14px; border-radius: 12px;
+    border: 1px dashed var(--line);
+  }
+  .other .logo { width: 40px; height: 40px; border-radius: 10px; }
+  .mono {
+    display: grid; place-items: center; color: #fff; font-weight: 700; font-size: .95rem;
+  }
+  .other h3 { margin: 0; font-size: .95rem; }
+  .other p { margin: 0; color: var(--muted); font-size: .82rem; }
+
+  footer { margin-top: 56px; color: var(--muted); font-size: .8rem; }
+  @media (max-width: 480px) {
+    main { padding: 36px 16px 56px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Índex de projectes</h1>
+    <p>Totes les aplicacions i petits projectes publicats, en un sol lloc.</p>
+  </header>
+
+  <h2>Publicats</h2>
+  <div class="grid" id="published"></div>
+
+  <h2>Sense web pública</h2>
+  <div class="others" id="others"></div>
+
+  <footer>Actualitzat el novembre de 2026.</footer>
+</main>
+
+<script>
+  const BASE = "https://dddaviddd777.github.io/";
+
+  const published = [
+    { name: "AFTER 12", path: "AFTER12/", logo: "AFTER12/icona-192.png",
+      desc: "Web del projecte musical AFTER 12: deep house i techno hipnòtic.", tag: "Música" },
+    { name: "Boletus Finder", path: "Boletus-Finder/", logo: "Boletus-Finder/icons/icon.svg",
+      desc: "Guia dels bolets de Catalunya, amb mapa interactiu de zones boletaires.", tag: "Guia · App" },
+    { name: "Màquina del Temps Borsària", path: "calculadora-borsaria/", logo: "calculadora-borsaria/logo.svg",
+      desc: "Calculadora d'inversió amb dades històriques i projecció.", tag: "Finances" },
+    { name: "Cosmos – Sistema Solar", path: "cosmos/", logo: "cosmos/icon.svg",
+      desc: "Planetes, estrelles i galàxies visibles: on són ara i com trobar-los al cel.", tag: "Astronomia · App" },
+    { name: "Costa Brava Submarina", path: "Costa-Brava-Submarina/", logo: "Costa-Brava-Submarina/icons/icon.svg",
+      desc: "Guia de la fauna i la flora submarina de la Costa Brava.", tag: "Guia · App" },
+    { name: "Rellotge Lunar", path: "Rellotge-Lunar/", logo: "Rellotge-Lunar/icona-192.png",
+      desc: "Fase lunar en temps real, la pròxima fase i què implica.", tag: "Astronomia · App" },
+    { name: "Reposta", path: "reposta/", logo: "reposta/icons/icon-192.png",
+      desc: "Preus de la gasolina i el gasoil al mapa, en temps real.", tag: "Utilitat · App" },
+    { name: "Speed Vortex", path: "Speed-Vortex/", logo: "Speed-Vortex/icons/icon.svg",
+      desc: "Esquiva els blocs i passa pels forats d'un túnel de neó.", tag: "Joc" },
+    { name: "SuplementAPP", path: "suplementapp/", logo: "suplementapp/icons/icon-192.png",
+      desc: "Recomanacions orientatives de suplementació segons el perfil, la dieta i l'esport.", tag: "Salut · App" },
+  ];
+
+  const others = [
+    { name: "Crazy Web", desc: "Web de stickers BELLUGA.PARTY.", mono: "CW", color: "#d6487e" },
+    { name: "Meme Generator", desc: "Eina local per crear memes i stickers a partir de vídeos.", mono: "MG", color: "#7a5af5" },
+    { name: "Prestapp", desc: "Demo de l'app Presta.", mono: "P", color: "#2b9a8a" },
+    { name: "Web CNPE", desc: "Proposta de redisseny de la web del club.", logo: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMjUuNjYgNDAwLjY4Ij48ZGVmcz48c3R5bGU+LmF7ZmlsbDojZmZmO308L3N0eWxlPjwvZGVmcz48dGl0bGU+Q05QRSBMT0dPMjwvdGl0bGU+PHBhdGggY2xhc3M9ImEiIGQ9Ik00MS4xMiwzNiw5LjkzLDEwNy4yOGE4LjI3LDguMjcsMCwwLDAtLjY5LDMuMzJ2NDQuMDhINDEuMTJaIj48L3BhdGg+PHBhdGggY2xhc3M9ImEiIGQ9Ik0xODQuODEsMzYsMjE2LDEwNy4yOGE4LjI4LDguMjgsMCwwLDEsLjcsMy4zMnY0NC4wOEgxODQuODFaIj48L3BhdGg+PHBvbHlnb24gY2xhc3M9ImEiIHBvaW50cz0iMTA2LjU4IDQuOTcgNTkuNTMgNC45NyA1OS41MyAyNi4yNSA2Ny4zNiAyNi4yNSA2Ny4zNiAxNTQuNjggOTkuMjMgMTU0LjY4IDk5LjIzIDI2LjI1IDEwNi41OCAyNi4yNSAxMDYuNTggNC45NyI+PC9wb2x5Z29uPjxwb2x5Z29uIGNsYXNzPSJhIiBwb2ludHM9IjE2NS44NCA0Ljk3IDExOC43OSA0Ljk3IDExOC43OSAyNi4yNSAxMjYuMzggMjYuMjUgMTI2LjM4IDE1NC42OCAxNTguMjYgMTU0LjY4IDE1OC4yNiAyNi4yNSAxNjUuODQgMjYuMjUgMTY1Ljg0IDQuOTciPjwvcG9seWdvbj48cGF0aCBjbGFzcz0iYSIgZD0iTTYuODgsMjQ2Ljc4djE0LjgzaDBjLjE5LDE4LjEyLDYuODMsODcuNjIsOTMuODQsMTMwLjI3aDBzLjQ1LjI1LDEuNDIuNjljMS4zMy42MSwzLjY0LDEuNTgsNy4wOSwyLjc5VjI0Ni43OFoiPjwvcGF0aD48cGF0aCBjbGFzcz0iYSIgZD0iTTIxMS4zMywyOTUuMTFjLS4zOS0uMy0uOC0uNTgtMS4yMi0uODVDMjEwLjUxLDI5NC41NiwyMTAuOTIsMjk0Ljg0LDIxMS4zMywyOTUuMTFaIj48L3BhdGg+PHBhdGggY2xhc3M9ImEiIGQ9Ik0xMTkuNDQsMzIyLjE5YTEuNjcsMS42NywwLDAsMCwwLC4zMmMwLC42MSwwLDEuMjMsMCwxLjg0aDBaIj48L3BhdGg+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTAuOTIsMjYxLjU3Yy42OC41LDEuMzcsMSwyLjA2LDEuNDFsMCwwQTEyLjQ2LDEyLjQ2LDAsMCwwLDIxMC45MiwyNjEuNTdaIj48L3BhdGg+PHBhdGggY2xhc3M9ImEiIGQ9Ik0xMTkuNDMsMzI2Ljg0YzAsLjQzLDAsLjg1LDAsMS4yOHYtMy43N2gwYzAsLjgzLDAsMS42NiwwLDIuNDlaIj48L3BhdGg+PHBhdGggY2xhc3M9ImEiIGQ9Ik0xMTkuNDEsMzMxLjA2YTEuNDIsMS40MiwwLDAsMCwwLC4zN3YtMS4zQzExOS40MywzMzAuNDQsMTE5LjQzLDMzMC43NSwxMTkuNDEsMzMxLjA2WiI+PC9wYXRoPjxwYXRoIGNsYXNzPSJhIiBkPSJNMTE5LjQzLDI2Ny4zNGgwdi02LjQ2QzExOS40MywyNjMsMTE5LjQzLDI2NS4xMywxMTkuNDMsMjY3LjM0WiI+PC9wYXRoPjxwYXRoIGNsYXNzPSJhIiBkPSJNMTE5LjQzLDM2Mi44NmgwVjM1Ni40QzExOS40MywzNTguNTEsMTE5LjQzLDM2MC42NSwxMTkuNDMsMzYyLjg2WiI+PC9wYXRoPjxwYXRoIGNsYXNzPSJhIiBkPSJNMTkzLjI2LDI4MC4wN2EyNi4xNiwyNi4xNiwwLDAsMC0xMi40NCw2LjI3LDExLjkyLDExLjkyLDAsMCwxLTcuNiwzLDEyLjg5LDEyLjg5LDAsMCwxLTkuNDEtMy40MWMtMTAuMDctOC42Ny0yNi4yOS04LjgzLTM2LjUzLS4zNGExNy4zMiwxNy4zMiwwLDAsMS03Ljc4LDMuNzlWMjk5LjZhMjYuNjksMjYuNjksMCwwLDAsOS43Ni0yLjA1LDMwLjkzLDMwLjkzLDAsMCwwLDguMjctNS4yMSwxMi4xMSwxMi4xMSwwLDAsMSw5Ljk1LTIuNTMsMTMsMTMsMCwwLDEsNi43NSwzLjM2YzcuMTksNi4yNiwxOC4wOCw4LjIyLDI3Ljg1LDVhMjcuNCwyNy40LDAsMCwwLDkuNTQtNS41NCwxMi4yNywxMi4yNywwLDAsMSwxMC40OS0yLjgsMTMuNjMsMTMuNjMsMCwwLDEsNi44LDMuNWMuMzkuMzMuOC42MywxLjIuOTNzLjgzLjU1LDEuMjIuODUuODIuNTUsMS4yNS44YzEuMjYtNC4xNSwyLjI2LTguMSwzLTExLjc5bDAtLjE1QzIwOS40MiwyNzkuNzksMjAyLDI3OC4zNCwxOTMuMjYsMjgwLjA3WiI+PC9wYXRoPjxwYXRoIGNsYXNzPSJhIiBkPSJNMTk1LjYzLDMxMi4yMWEyNS45NCwyNS45NCwwLDAsMC0xMi45NCw2LjA1LDEyLjgsMTIuOCwwLDAsMS0xNy4yLjI5LDI5LjI3LDI5LjI3LDAsMCwwLTM3LjQyLS4xNiwxMi42OSwxMi42OSwwLDAsMS03Ljc2LDMuMjVjLS42MywwLS44Mi4yNS0uODcuNTV2OS4yNGMuMS40OC41LjYyLDEuMzIuNThhMjYuMjMsMjYuMjMsMCwwLDAsMTAuOTEtMi42Niw0Ni4zOSw0Ni4zOSwwLDAsMCw2LjcyLTQuNDEsMTIuOTQsMTIuOTQsMCwwLDEsMTEuMS0yLjY3LDEyLjQxLDEyLjQxLDAsMCwxLDUuODUsMy4wNkEyNy4yOSwyNy4yOSwwLDAsMCwxNzIuNzgsMzMyYTI3LjgxLDI3LjgxLDAsMCwwLDE5Ljg0LTYuNzksMTMsMTMsMCwwLDEsOS4xNi0zLjI0YzEuNDYtMi43MywyLjc2LTUuNDIsNC04LjA4LjI3LS41OC41Ni0xLjE4LjgxLTEuNzVBMzIuMTUsMzIuMTUsMCwwLDAsMTk1LjYzLDMxMi4yMVoiPjwvcGF0aD48cGF0aCBjbGFzcz0iYSIgZD0iTTEyNy4yOCwzODEuMTFhMTcuMjIsMTcuMjIsMCwwLDEtNy43OCwzLjc5djEwLjIybC42LDBjMy0xLjExLDUtMiw2LjIxLTIuNTguOTMtLjQ1LDEuMzctLjcsMS4zNy0uN2gwYTIwNS4wOSwyMDUuMDksMCwwLDAsMjQtMTQuNDRsMS45NC0xLjM3QzE0NC43LDM3My40NSwxMzQuNSwzNzUuMTMsMTI3LjI4LDM4MS4xMVoiPjwvcGF0aD48cGF0aCBjbGFzcz0iYSIgZD0iTTE2Ny43MSwzNTFhMjEuNDEsMjEuNDEsMCwwLDEtMy4wOC0yLjI5Yy0xMC4yMy04LjI1LTI2LjIxLTguMTctMzYuMTguMjVhMTQuMSwxNC4xLDAsMCwxLTguMTUsMy42MmMtLjMyLDAtLjgyLjQyLS44My42NSwwLC42OSwwLDEuMzksMCwyLjA5LDAsLjM4LDAsLjc1LDAsMS4xMnY2LjQ2Yy42NCwwLDEuMDYsMCwxLjQ4LDBhMjcuODksMjcuODksMCwwLDAsMTMuMzgtNGMxLjY2LTEsMy4xMS0yLjI2LDQuNjMtMy40MmExMi43OCwxMi43OCwwLDAsMSwxNS41NS4wOGMuNDkuMzksMSwuODEsMS40NSwxLjIxYTI4LjEzLDI4LjEzLDAsMCwwLDE0LjE0LDZjMi43Ny0yLjU1LDUuMzctNS4xMyw3LjgzLTcuNzIsMi4xOC0yLjMsNC4yNi00LjYxLDYuMjEtNi45My0uNzIuNTMtMS40MiwxLjA5LTIuMSwxLjY2QTEyLjY1LDEyLjY1LDAsMCwxLDE2Ny43MSwzNTFaIj48L3BhdGg+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTcuNzQsMjUyLjEzbDAsMGMtNy40NC01LjQtMTguMjYtNi42LTI3LjQ3LTNhMjguNDksMjguNDksMCwwLDAtOC4yMiw1LjA4LDEyLjY1LDEyLjY1LDAsMCwxLTE0LjMsMS4yOSwyMi4xMiwyMi4xMiwwLDAsMS0zLjA4LTIuMjhjLTEwLjIzLTguMjYtMjYuMjEtOC4xNy0zNi4xOC4yNUExNC4xNiwxNC4xNiwwLDAsMSwxMjAuMywyNTdjLS4zMiwwLS44Mi40Mi0uODMuNjUsMCwuNzMsMCwxLjQ3LDAsMi4yMSwwLC4zMywwLC42NywwLDF2Ni40NmMuNjQsMCwxLjA2LDAsMS40OCwwYTI4LDI4LDAsMCwwLDEzLjM4LTRjMS42Ni0xLDMuMTEtMi4yNiw0LjYzLTMuNDNhMTIuODEsMTIuODEsMCwwLDEsMTUuNTUuMDhsMS40NSwxLjIxYTI5LjE0LDI5LjE0LDAsMCwwLDMyLjE4LDIuNTIsMzUuMywzNS4zLDAsMCwwLDQuOS0zLjUyLDEyLjg1LDEyLjg1LDAsMCwxLDE2LjI3LDBjLjQ4LjQxLjkzLjgzLDEuNDQsMS4yMmwuMi4xNWExMi40NiwxMi40NiwwLDAsMSwyLDEuMzlsMCwwYTI4LjIzLDI4LjIzLDAsMCwwLDUuMjcsMi42NGMuMTYtMi4zNS4yMy00LjM1LjI0LTZoMHYtN1oiPjwvcGF0aD48cGF0aCBjbGFzcz0iYSIgZD0iTTQ0LjA5LDE3NC41MmE0MS41OSw0MS41OSwwLDAsMC01LjE1LTEsMzguNjUsMzguNjUsMCwwLDAtNC4yNS0uMzVjLS42NiwwLTEuMzIsMC0yLDBhMzIuNjksMzIuNjksMCwwLDAtMTEuNTksMiwyNC4xOCwyNC4xOCwwLDAsMC04Ljg5LDUuNjZBMjUuNTQsMjUuNTQsMCwwLDAsNi41LDE4OS45YTM3LjU1LDM3LjU1LDAsMCwwLC4xLDI0LjI0LDIzLjQxLDIzLjQxLDAsMCwwLDE0LjcxLDE0LjM0LDM0LjA2LDM0LjA2LDAsMCwwLDExLjMyLDEuODFjLjc2LDAsMS40NiwwLDIuMTIsMGEzMy40NSwzMy40NSwwLDAsMCw0LjM5LS4zNyw0Ni42Myw0Ni42MywwLDAsMCw1LjA2LTEuMTksMzIuNDQsMzIuNDQsMCwwLDAsNC0xLjRjMS4yNS0uNTQsMi41Ny0xLjEyLDQtMS43NFYyMTIuNDFINTAuNjNjLS42Ni41OC0xLjUxLDEuMjgtMi41NSwyLjA5YTI5LjkyLDI5LjkyLDAsMCwxLTMuMzYsMi4yOCwyMC4yNSwyMC4yNSwwLDAsMS00LjY4LDIuMSwxOC4zMiwxOC4zMiwwLDAsMS0zLjYzLjdjLS40OSwwLTEsLjA3LTEuNDguMDdhMTguMTUsMTguMTUsMCwwLDEtNS40Ny0uODcsMTMuNDgsMTMuNDgsMCwwLDEtNS0yLjg5LDE1LDE1LDAsMCwxLTMuNjgtNS40NiwyMi4zNywyMi4zNywwLDAsMS0xLjQ2LTguNjMsMjMuMiwyMy4yLDAsMCwxLDEuMzUtOC40MSwxNS4zNywxNS4zNywwLDAsMSwzLjUzLTUuNTcsMTMuOTIsMTMuOTIsMCwwLDEsNS0zLjEyLDE3LjExLDE3LjExLDAsMCwxLDUuNjktLjk0Yy40OSwwLDEsMCwxLjQ1LjA3YTE0Ljc0LDE0Ljc0LDAsMCwxLDMuNjEuNzQsMjQuMTUsMjQuMTUsMCwwLDEsNC40LDJBMzQsMzQsMCwwLDEsNDcuODgsMTg5YzEsLjgxLDEuOTEsMS41LDIuNjEsMi4wOWgxLjYyVjE3Ny43Yy0xLS40OS0yLjE5LTEtMy41My0xLjYxQTM2LjU2LDM2LjU2LDAsMCwwLDQ0LjA5LDE3NC41MloiPjwvcGF0aD48cG9seWdvbiBjbGFzcz0iYSIgcG9pbnRzPSI5OS41NyAxNzQuMTkgOTkuNTcgMjAxLjA0IDk5LjU3IDIwNS43MiA3OS41IDE3NC4xOSA2NS41MSAxNzQuMTkgNjIuNTMgMTc0LjE5IDYyLjUzIDIyOS4yMiA2NS41MSAyMjkuMjIgNzUuNTQgMjI5LjIyIDc1LjU0IDE5MS40NSA3OC41MiAxOTYuMjYgOTguOSAyMjkuMjIgMTAxLjg4IDIyOS4yMiAxMTIuNTggMjI5LjIyIDExMi41OCAxNzQuMTkgMTAyLjU1IDE3NC4xOSA5OS41NyAxNzQuMTkiPjwvcG9seWdvbj48cGF0aCBjbGFzcz0iYSIgZD0iTTE2NS4yMSwxNzcuODFhMjAuOTEsMjAuOTEsMCwwLDAtNi4zOC0yLjcyLDM3LjEsMzcuMSwwLDAsMC04Ljg1LS45SDEyNi42MnY1NWgxNC4yVjIxMS4zaDguODNhMjYuNiwyNi42LDAsMCwwLDEwLjA3LTEuNjcsMjIuNjQsMjIuNjQsMCwwLDAsNy4zNC00LjkxLDE2LjA1LDE2LjA1LDAsMCwwLDMuNjktNS45MywyMSwyMSwwLDAsMCwxLjMtNy4yMywxNy42MywxNy42MywwLDAsMC0xLjc2LTguMTdBMTQuNTQsMTQuNTQsMCwwLDAsMTY1LjIxLDE3Ny44MVptLTIxLjQyLDIzLjFoLTNWMTg0LjQ2aDNjMi4wOSwwLDMuNzksMCw1LjA4LjA5YTEzLjE2LDEzLjE2LDAsMCwxLDQuMzMsMSw2Ljk0LDYuOTQsMCwwLDEsMi45MiwyLjM0LDYuNTYsNi41NiwwLDAsMSwxLjI1LDQsMTEuNDksMTEuNDksMCwwLDEtLjYxLDQsNi44LDYuOCwwLDAsMS0yLDIuODIsOC42LDguNiwwLDAsMS0zLjk0LDEuNzcsMzMuNjcsMzMuNjcsMCwwLDEtNiwuNDRaIj48L3BhdGg+PHBvbHlnb24gY2xhc3M9ImEiIHBvaW50cz0iMTk1Ljc5IDE4NC44MyAyMTguNSAxODQuODMgMjE4LjUgMTc0LjE5IDE4MS42NyAxNzQuMTkgMTc4LjY5IDE3NC4xOSAxNzguNjkgMjI5LjIyIDE4MS42NyAyMjkuMjIgMjE4LjUgMjI5LjIyIDIxOC41IDIxOC41OCAxOTUuNzkgMjE4LjU4IDE5Mi44MSAyMTguNTggMTkyLjgxIDIwNC45OCAxOTUuNzkgMjA0Ljk4IDIxNi42NSAyMDQuOTggMjE2LjY1IDE5NC4zMyAxOTUuNzkgMTk0LjMzIDE5Mi44MSAxOTQuMzMgMTkyLjgxIDE4NC44MyAxOTUuNzkgMTg0LjgzIj48L3BvbHlnb24+PC9zdmc+", color: "#0f2a4a" },
+  ];
+
+  const el = (tag, attrs = {}, children = []) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    for (const c of [].concat(children)) n.append(c);
+    return n;
+  };
+
+  const pub = document.getElementById("published");
+  for (const p of published) {
+    pub.append(el("a", { class: "card", href: BASE + p.path }, [
+      el("img", { class: "logo", src: BASE + p.logo, alt: "", width: 60, height: 60, loading: "lazy" }),
+      el("div", {}, [
+        el("h3", {}, p.name),
+        el("p", {}, p.desc),
+        el("span", { class: "tag" }, p.tag + " →"),
+      ]),
+    ]));
+  }
+
+  const oth = document.getElementById("others");
+  for (const o of others) {
+    const logo = o.logo
+      ? el("img", { class: "logo", src: o.logo, alt: "", style: `background:${o.color};padding:6px;object-fit:contain` })
+      : el("div", { class: "logo mono", style: `background:${o.color}`, "aria-hidden": "true" }, o.mono);
+    oth.append(el("div", { class: "other" }, [
+      logo,
+      el("div", {}, [el("h3", {}, o.name), el("p", {}, o.desc)]),
+    ]));
+  }
+</script>
+</body>
+</html>
